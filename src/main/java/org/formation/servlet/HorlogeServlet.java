@@ -2,8 +2,11 @@ package org.formation.servlet;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
+import java.awt.Label;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,13 +15,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.PushBuilder;
 
-@WebServlet("/HelloWorldJSP")
-public class HelloWorldJSPServlet extends HttpServlet {
-
-
+@WebServlet("/HorlogeJSP")
+public class HorlogeServlet extends HttpServlet {
 	@Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException,ServletException {
-		req.setAttribute("name", "Lord Vetinari");
-		req.getRequestDispatcher("/jsp/HelloWorldJSP.jsp").forward(req, resp);
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+		Label timeLabel = new Label(LocalTime.now().format(dtf));
+
+		req.setAttribute("heure", timeLabel);
+		req.getRequestDispatcher("/jsp/HorlogeJSP.jsp").forward(req, resp);
 	}
 }
